@@ -1,0 +1,11 @@
+{
+  "name": "tic-tac-toe-realtime",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "repository": "https://github.com/Chen-Abudi/tic-tac-toe-realtime.git",
+  "author": "Grace Chen Abudi <cheezumcali23@gmail.com>"
+}

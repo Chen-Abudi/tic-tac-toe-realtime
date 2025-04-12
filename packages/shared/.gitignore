@@ -1,0 +1,10 @@
+# Node.js
+node_modules
+
+# IDEs
+.vscode/
+.idea/
+
+# Optional: Ignore any build or test output
+/dist
+

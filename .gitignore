@@ -1,0 +1,38 @@
+# Ignore node_modules in all workspaces
+/apps/client/node_modules
+/apps/server/node_modules
+/packages/shared/node_modules
+
+# Ignore build folders (if any)
+/apps/client/.next
+/apps/server/dist
+
+# Ignore environment variables (optional)
+.env
+
+# node_modules
+node_modules/
+apps/**/node_modules/
+packages/**/node_modules/
+
+# build output
+dist/
+.next/
+out/
+
+# misc
+.env
+.DS_Store
+*.log
+*.local
+
+# Yarn/VSCode
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.vscode/
+
+
