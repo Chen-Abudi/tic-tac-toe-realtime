@@ -100,16 +100,16 @@ Note: This is a simple client for testing purposes. It will connect to the serve
 
 - [x] Add test-client for real-time testing
 
-- Create frontend app and hook up sockets
+- [ ] Create frontend app and hook up sockets
 
-- Build out UI with Tailwind & match Figma
+- [ ] Build out UI with Tailwind & match Figma
 
-- Create design system with Storybook
+- [ ] Create design system with Storybook
 
-- Add game animations and sound effects
+- [ ] Add game animations and sound effects
 
-- Add persistent database (optional)
+- [ ] Add persistent database (optional)
 
-- Add lobby / room browser (bonus!)
+- [ ] Add lobby / room browser (bonus!)
 
 ---
