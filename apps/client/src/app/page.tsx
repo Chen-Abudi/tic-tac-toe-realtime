@@ -1,5 +1,5 @@
-import GameBoard from "./components/GameBoard";
-import RoomForm from "./components/RoomForm";
+import GameBoard from "../components/GameBoard";
+import RoomForm from "../components/RoomForm";
 
 export default function HomePage() {
   return (
