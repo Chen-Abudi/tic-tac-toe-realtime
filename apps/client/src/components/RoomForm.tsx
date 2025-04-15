@@ -11,16 +11,16 @@ const RoomForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 mt-10 justify-center">
+    <form onSubmit={handleSubmit} className="flex gap-2 justify-center mt-10">
       <input
         value={roomId}
         onChange={(evt) => setRoomId(evt.target.value)}
-        className="border px-4 py-2"
+        className="border px-4 py-2 rounded"
         placeholder="Please Enter Room ID"
       />
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded"
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 cursor-pointer transition"
       >
         Join
       </button>
