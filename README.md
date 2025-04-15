@@ -110,6 +110,6 @@ Note: This is a simple client for testing purposes. It will connect to the serve
 
 - [ ] Add persistent database (optional)
 
-- [ ] Add lobby / room browser (bonus!)
+- [ ] Add lobby / room browser (later on)
 
 ---
