@@ -27,7 +27,7 @@ This monorepo is build with a modular mindset and includes both the **backend se
 - 🧠 Game logic in-memory (scalable later)
 - 🔤 TypeScript, ts-node-dev
 
-### Frontend (coming next)
+### Frontend (In Progress)
 
 - ⚛️ React + Next.js
 - ⚡ Vite for blazing-fast dev
@@ -51,11 +51,12 @@ This monorepo is build with a modular mindset and includes both the **backend se
 ```txt
 apps/
   ├── server/          # Backend API & Socket.IO server
-  ├── client/              # Frontend app (coming soon)
+  ├── client/              # Frontend app
   └── test-client/     # Simple socket.io client for testing
 
 packages/
-  └── design-system/   # Shared UI components (Storybook, coming soon)
+  └── shared
+  └── ui/   # Shared UI components (Storybook)
 ```
 
 ---
