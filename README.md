@@ -101,11 +101,11 @@ Note: This is a simple client for testing purposes. It will connect to the serve
 
 - [x] Add test-client for real-time testing
 
-- [ ] Create frontend app and hook up sockets
+- [x] Create frontend app and hook up sockets
 
-- [ ] Build out UI with Tailwind & match Figma
+- [In Progress] Build out UI with Tailwind & match Figma
 
-- [ ] Create design system with Storybook
+- [In Progress] Create design system with Storybook
 
 - [ ] Add game animations and sound effects
 
