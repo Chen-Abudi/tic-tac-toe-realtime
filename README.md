@@ -59,7 +59,7 @@ packages/
   └── ui/   # Shared UI components (Storybook)
 ```
 
----
+<!-- ---
 
 ## 🚀 Getting Started
 
@@ -89,7 +89,7 @@ yarn workspace test-client ts-node index.ts
 
 ```
 
-Note: This is a simple client for testing purposes. It will connect to the server and emit a message.
+Note: This is a simple client for testing purposes. It will connect to the server and emit a message. -->
 
 ---
 
