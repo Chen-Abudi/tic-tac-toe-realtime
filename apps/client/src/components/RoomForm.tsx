@@ -1,12 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
+import { useSocket } from "@client/hooks/useSocket";
 
 const RoomForm = () => {
   const [roomId, setRoomId] = useState("");
+  const socketRef = useSocket();
 
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
+
+    if (!roomId || !socketRef.current) return;
+
+    socketRef.current.emit("join_room", roomId);
     console.log("Joining room:", roomId);
   };
 
