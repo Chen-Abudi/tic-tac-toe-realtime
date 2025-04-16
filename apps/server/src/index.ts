@@ -32,11 +32,16 @@ io.on("connection", (socket) => {
   console.log(`⚡️ New client connected: ${socket.id}`);
 
   socket.on("create_room", (roomId) => {
+    console.log(`📦 Creating room ${roomId} by ${socket.id}`); // Log for debugging
+
     const game = createRoom(roomId, socket.id);
     rooms.set(roomId, new Set([socket.id])); // Store the socket ID in the room
 
     socket.join(roomId);
     socket.emit("room_joined", game);
+
+    // Log the room ID after it's created for testing purposes
+    console.log(`Room created with ID: ${roomId}`);
   });
 
   socket.on("join_room", (roomId) => {
@@ -46,6 +51,8 @@ io.on("connection", (socket) => {
       rooms.get(roomId)?.add(socket.id); // Add the new player to the room
       socket.join(roomId);
       io.to(roomId).emit("room_joined", game);
+
+      console.log(`Player ${socket.id} joined room ${roomId}`); // Log for debugging
     } else {
       socket.emit("error", "Oops, Room is full or doesn't exist");
     }
@@ -67,7 +74,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log(`❌ Client disconnected: ${socket.id}`);
-    // TODO: Will handle the cleanup here later
+
     for (const [roomId, players] of rooms.entries()) {
       if (players.has(socket.id)) {
         players.delete(socket.id); // Remove the player from the room
@@ -75,6 +82,7 @@ io.on("connection", (socket) => {
         if (players.size === 0) {
           // If no players left, remove the room
           rooms.delete(roomId);
+          console.log(`Room ${roomId} is now empty and deleted`); // Log for debugging
         } else {
           // Notify other players in the room that someone disconnected
           io.to(roomId).emit("player_disconnected", {
