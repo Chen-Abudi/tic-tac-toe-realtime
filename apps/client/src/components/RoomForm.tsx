@@ -45,17 +45,6 @@ const RoomForm = () => {
     }
   };
 
-  // const handleSubmit = (evt: React.FormEvent) => {
-  //   evt.preventDefault();
-
-  //   if (!roomId || !socketRef.current) return;
-
-  //   // socketRef.current.emit("join_room", roomId);
-  //   socketRef.current.emit("create_room", roomId);
-
-  //   console.log(`Joining room ${roomId}`); // Log for debugging
-  // };
-
   return (
     <form onSubmit={handleJoinRoom} className="flex gap-2 justify-center mt-10">
       <input
@@ -67,12 +56,7 @@ const RoomForm = () => {
       />
       <div className="flex gap-4">
         <Button onClick={handleCreateRoom}>Create Room</Button>
-        <Button
-          type="submit"
-          // className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 cursor-pointer transition"
-        >
-          Join Room
-        </Button>
+        <Button type="submit">Join Room</Button>
       </div>
     </form>
   );
