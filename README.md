@@ -8,12 +8,12 @@ This monorepo is build with a modular mindset and includes both the **backend se
 
 ## ✨ Features
 
-- Real-time multiplayer game via **WebSockets**
+- Real-time multiplayer game via **`WebSockets`**
 - Game rooms and dynamic player sessions
 - Turn-based game logic with win/draw detection
-- Fully modular monorepo using **Yarn Workspaces**
-- Design System with Storybook (coming soon)
-- TypeScript across all layers
+- Smooth gameplay with state synchronization
+- Modular monorepo powered by **`Yarn Workspaces`**
+- Shared Design System using **`Storybook`** (in progress)
 - Inspired by [this Figma design](https://www.figma.com/design/ajH9a7AsS7F58ysatXikmv/tic-tac-toe)
 
 ---
@@ -30,11 +30,12 @@ This monorepo is build with a modular mindset and includes both the **backend se
 ### Frontend (In Progress)
 
 - ⚛️ React + Next.js
-- ⚡ Vite for blazing-fast dev
-- 🎨 TailwindCSS
-- 📕 Storybook (Design System)
-- 💾 Zustand (local state)
-- 🧼 ESLint + Prettier (to be added later)
+- ⚡ Vite for ultra-fast development
+- 🎨 TailwindCSS + Custom animations
+- 💾 Zustand for local state management
+- 🧩 Component-driven with reusable UI
+- 📕 Storybook for Design System (coming soon)
+- 🧼 ESLint + Prettier (planned to be added later)
 
 ### Dev / Tooling
 
@@ -42,7 +43,7 @@ This monorepo is build with a modular mindset and includes both the **backend se
 - 🗂️ Monorepo Layout
 - 📁 Modular architecture
 - 🧪 `test-client` for local socket testing
-- 📦 GitHub + feature branch workflow
+- 📦 GitHub + Feature branch workflow
 
 ---
 
@@ -103,14 +104,20 @@ Note: This is a simple client for testing purposes. It will connect to the serve
 
 - [x] Create frontend app and hook up sockets
 
-- [In Progress] Build out UI with Tailwind & match Figma
+- [x] Add responsive styles and transitions for gameplay
 
-- [In Progress] Create design system with Storybook
+- [x] Fix game state / UI sync across clients
+
+- [**In Progress**] Build out UI with Tailwind & match Figma
+
+- [**In Progress**] Create design system with Storybook
 
 - [ ] Add game animations and sound effects
 
 - [ ] Add persistent database (optional)
 
 - [ ] Add lobby / room browser (later on)
+
+- [ ] Finalize design system in Storybook
 
 ---
