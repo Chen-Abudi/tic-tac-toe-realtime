@@ -9,7 +9,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*", // Adjust this in production
+    origin: "*", // TODO: Adjust this in production
     methods: ["GET", "POST"],
   },
 });
