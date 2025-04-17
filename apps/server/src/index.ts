@@ -3,12 +3,7 @@ import express, { Request, Response } from "express";
 import http from "http";
 import { Server } from "socket.io";
 
-import {
-  createRoom,
-  joinRoom,
-  makePlayerMove,
-  getGameState,
-} from "./gameManager";
+import { createRoom, joinRoom, makePlayerMove } from "./gameManager";
 
 const app = express();
 const server = http.createServer(app);
@@ -56,6 +51,11 @@ io.on("connection", (socket) => {
     } else {
       socket.emit("error", "Oops, Room is full or doesn't exist");
     }
+
+    console.log(
+      `All clients in room ${roomId}:`,
+      Array.from(io.sockets.adapter.rooms.get(roomId) || [])
+    );
   });
 
   socket.on("make_move", ({ roomId, row, col }) => {
