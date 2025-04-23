@@ -5,11 +5,15 @@ type GameState = {
   board: string[][];
   currentPlayer: string;
   gameOverMessage: string | null;
+  playerName: string;
+  opponentName: string;
+  playerSymbol: "X" | "O" | "";
+  opponentSymbol: "X" | "O" | "";
 };
 
 type GameStore = GameState & {
-  setGameState: (state: GameState) => void;
-  gameOverMessage: string | null;
+  setGameState: (state: Partial<GameState>) => void;
+  // gameOverMessage: string | null;
   setGameOverState: (message: string | null) => void;
   resetGame: () => void;
 };
@@ -23,10 +27,14 @@ export const useGameStore = create<GameStore>((set) => ({
   ],
   currentPlayer: "",
   gameOverMessage: null,
-  setGameState: (state) => set(() => ({ ...state })),
+  playerName: "",
+  opponentName: "",
+  playerSymbol: "",
+  opponentSymbol: "",
+  setGameState: (state) => set((prev) => ({ ...prev, ...state })),
   setGameOverState: (message) => set(() => ({ gameOverMessage: message })),
   resetGame: () =>
-    set(() => ({
+    set((state) => ({
       board: [
         ["", "", ""],
         ["", "", ""],
@@ -34,5 +42,10 @@ export const useGameStore = create<GameStore>((set) => ({
       ],
       currentPlayer: "",
       gameOverMessage: null,
+      roomId: state.roomId,
+      playerName: state.playerName,
+      opponentName: state.opponentName,
+      playerSymbol: state.playerSymbol,
+      opponentSymbol: state.opponentSymbol,
     })),
 }));
