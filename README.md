@@ -2,7 +2,7 @@
 
 A real-time multiplayer Tic Tac Toe game powered by **Node.js**, **Socket.IO**, and a cool UI inspired by a Figma design.
 
-This monorepo is build with a modular mindset and includes both the **backend server**, the upcoming **frontend app**, and a **shared design system** with Storybook.
+This monorepo is built with a modular mindset and includes both the **backend server**, the **frontend app**, and a **shared design system** with Storybook.
 
 ---
 
@@ -25,6 +25,7 @@ This monorepo is build with a modular mindset and includes both the **backend se
 - ⚙️ Node.js + Express
 - 🔌 Socket.IO (WebSockets)
 - 🧠 Game logic in-memory (scalable later)
+- 📊 MongoDB/Mongoose for data persistence
 - 🔤 TypeScript, ts-node-dev
 
 ### Frontend (In Progress)
@@ -60,64 +61,94 @@ packages/
   └── ui/   # Shared UI components (Storybook)
 ```
 
-<!-- ---
+---
 
 ## 🚀 Getting Started
 
-1. Install all dependencies
+### Prerequisites
+
+- Node.js (v18 or higher recommended)
+- Yarn package manager
+- MongoDB (local or Atlas connection)
+
+### Installation
+
+1. Clone the repository
 
 ```bash
+git clone https://github.com/Chen-Abudi/tic-tac-toe-realtime.git
+cd tic-tac-toe-realtime
+```
 
+2. Install all dependencies
+
+```bash
 yarn install
-
 ```
 
-2. Start the backend server
+3. Start the backend server
 
 ```bash
-
 yarn workspace server dev
-
 ```
 
-**Note**: Server runs on: http://localhost:4001
+**Note**: Server runs on: http://localhost:4001 by default
 
-3. (Optional) Run the Socket.io test client
+4. Start the frontend client
 
 ```bash
-
-yarn workspace test-client ts-node index.ts
-
+yarn workspace client dev
 ```
 
-Note: This is a simple client for testing purposes. It will connect to the server and emit a message. -->
+**Note**: Client runs on: http://localhost:3000 by default
+
+5. (Optional) Run the Socket.io test client
+
+```bash
+yarn workspace test-client ts-node index.ts
+```
+
+Note: This is a simple client for testing purposes. It will connect to the server and emit messages to test the socket connection.
 
 ---
 
-🛣️ Roadmap
+## 🛣️ Roadmap
 
 - [x] Setup monorepo with Yarn Workspaces
-
 - [x] Build backend with room management + game logic
-
 - [x] Add test-client for real-time testing
-
 - [x] Create frontend app and hook up sockets
-
 - [x] Add responsive styles and transitions for gameplay
-
 - [x] Fix game state / UI sync across clients
-
 - [**In Progress**] Build out UI with Tailwind & match Figma
-
 - [**In Progress**] Create design system with Storybook
-
 - [ ] Add game animations and sound effects
-
-- [ ] Add persistent database (optional)
-
+- [ ] Add persistent database with MongoDB
 - [ ] Add lobby / room browser (later on)
-
 - [ ] Finalize design system in Storybook
 
 ---
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can contribute:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📸 Screenshots
+
+*Coming soon*
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+## 👩‍💻 Author
+
+Grace Chen Abudi - [GitHub](https://github.com/Chen-Abudi)
