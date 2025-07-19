@@ -129,7 +129,7 @@ Note: This is a simple client for testing purposes. It will connect to the serve
 
 ---
 
-## 🤝 Contributing
+## 🤝🏽 Contributing
 
 Contributions are welcome! Here's how you can contribute:
 
@@ -141,7 +141,7 @@ Contributions are welcome! Here's how you can contribute:
 
 ## 📸 Screenshots
 
-*Coming soon*
+_Coming soon_
 
 ## 📄 License
 
@@ -149,6 +149,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-## 👩‍💻 Author
+## 👩🏽‍💻 Author
 
 Grace Chen Abudi - [GitHub](https://github.com/Chen-Abudi)
