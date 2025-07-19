@@ -49,12 +49,99 @@ io.on("connection", (socket) => {
     if (game) {
       rooms.set(roomId, game);
       socket.join(roomId);
-      io.to(roomId).emit("room_joined", game);
+
+      console.log(
+        ` [DEBUG] Emitting players_info for room ${roomId}:`,
+        game.players
+      );
+
+      // For each player individually
+      // TODO: Testing this
+      game.players.forEach((player) => {
+        io.to(player.id).emit("players_info", {
+          roomId,
+          players: game.players,
+          yourPlayerId: player.id,
+          currentPlayerId: game.currentPlayer,
+        });
+
+        // TODO: Might be replaced/removed
+        // const opponent = game.players.find((p) => p.id !== player.id);
+
+        // if (opponent) {
+        //   io.to(player.id).emit("players_info", {
+        //     roomId,
+        //     players: game.players,
+        //     yourPlayerId: player.id,
+        //     currentPlayerId: game.currentPlayer,
+        //   });
+
+        // TODO: Might be removed
+        // io.to(player.id).emit("players_info", {
+        //   roomId,
+        //   playerName: player.name,
+        //   playerSymbol: player.symbol,
+        //   opponentName: opponent.name,
+        //   opponentSymbol: opponent.symbol,
+        //   currentPlayer: game.currentPlayer,
+        //   yourPlayerId: player.id, // TODO: Testing this, might be removed or stay
+        // });
+
+        // }
+      });
+
       console.log(`🎮 Player ${socket.id} joined room ${roomId}`);
     } else {
       socket.emit("error", "Oops, Room is full or doesn't exist");
     }
   });
+
+  // TODO: Might change or remove this later
+  // socket.on("join_room", ({ roomId, playerName }) => {
+  //   const game = joinRoom(roomId, socket.id, playerName);
+
+  //   if (game) {
+  //     rooms.set(roomId, game);
+  //     socket.join(roomId);
+
+  //     // Might be the issue cause
+  //     // io.to(roomId).emit("room_joined", game);
+
+  //     // Testing this - might change or remove late
+  //     console.log(
+  //       `[DEBUG] Emitting players_info for room ${roomId}:`,
+  //       game.players
+  //     );
+
+  //     io.to(roomId).emit("players_info", {
+  //       roomId,
+  //       players: game.players.map(({ id, name, symbol }) => ({
+  //         id,
+  //         name,
+  //         symbol,
+  //       })),
+  //       yourPlayerId: socket.id,
+  //       currentPlayerId: game.currentPlayer,
+  //     });
+
+  //     console.log(`🎮 Player ${socket.id} joined room ${roomId}`);
+  //   } else {
+  //     socket.emit("error", "Oops, Room is full or doesn't exist");
+  //   }
+  // });
+
+  // socket.on("join_room", ({ roomId, playerName }) => {
+  //   const game = joinRoom(roomId, socket.id, playerName);
+
+  //   if (game) {
+  //     rooms.set(roomId, game);
+  //     socket.join(roomId);
+  //     io.to(roomId).emit("room_joined", game);
+  //     console.log(`🎮 Player ${socket.id} joined room ${roomId}`);
+  //   } else {
+  //     socket.emit("error", "Oops, Room is full or doesn't exist");
+  //   }
+  // });
 
   socket.on("make_move", ({ roomId, row, col }) => {
     // Log the move attempt

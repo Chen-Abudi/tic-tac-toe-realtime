@@ -5,7 +5,7 @@ type GameFlow = "HOME" | "SELECT_MODE" | "SETUP_ROOM" | "IN_GAME";
 type GameState = {
   roomId: string;
   board: string[][];
-  currentPlayer: string;
+  currentPlayer: "X" | "O";
   gameOverMessage: string | null;
   playerName: string;
   opponentName: string;
@@ -27,14 +27,21 @@ export const useGameStore = create<GameStore>((set) => ({
     ["", "", ""],
     ["", "", ""],
   ],
-  currentPlayer: "",
+  currentPlayer: "X", // defaulting to 'X' ensures that this field is never undefined
   gameOverMessage: null,
   playerName: "",
   opponentName: "",
   playerSymbol: "",
   opponentSymbol: "",
   gameFlow: "HOME",
-  setGameState: (state) => set((prev) => ({ ...prev, ...state })),
+  setGameState: (state) =>
+    set((prev) => ({
+      ...prev,
+      ...state,
+      currentPlayer: state.currentPlayer ?? prev.currentPlayer, // Ensures that currentPlayer is not overwritten by undefined
+      playerSymbol: state.playerSymbol ?? prev.playerSymbol, // Same for playerSymbol
+      opponentSymbol: state.opponentSymbol ?? prev.opponentSymbol, // Same for opponentSymbol
+    })),
   setGameOverState: (message) => set(() => ({ gameOverMessage: message })),
   resetGame: () =>
     set((state) => ({
@@ -43,7 +50,7 @@ export const useGameStore = create<GameStore>((set) => ({
         ["", "", ""],
         ["", "", ""],
       ],
-      currentPlayer: "",
+      currentPlayer: "X", // resetting the current player to 'X' as default
       gameOverMessage: null,
       roomId: state.roomId,
       playerName: state.playerName,
@@ -53,55 +60,3 @@ export const useGameStore = create<GameStore>((set) => ({
       gameFlow: "HOME",
     })),
 }));
-
-// import { create } from "zustand";
-
-// type GameState = {
-//   roomId: string;
-//   board: string[][];
-//   currentPlayer: string;
-//   gameOverMessage: string | null;
-//   playerName: string;
-//   opponentName: string;
-//   playerSymbol: "X" | "O" | "";
-//   opponentSymbol: "X" | "O" | "";
-// };
-
-// type GameStore = GameState & {
-//   setGameState: (state: Partial<GameState>) => void;
-//   // gameOverMessage: string | null;
-//   setGameOverState: (message: string | null) => void;
-//   resetGame: () => void;
-// };
-
-// export const useGameStore = create<GameStore>((set) => ({
-//   roomId: "",
-//   board: [
-//     ["", "", ""],
-//     ["", "", ""],
-//     ["", "", ""],
-//   ],
-//   currentPlayer: "",
-//   gameOverMessage: null,
-//   playerName: "",
-//   opponentName: "",
-//   playerSymbol: "",
-//   opponentSymbol: "",
-//   setGameState: (state) => set((prev) => ({ ...prev, ...state })),
-//   setGameOverState: (message) => set(() => ({ gameOverMessage: message })),
-//   resetGame: () =>
-//     set((state) => ({
-//       board: [
-//         ["", "", ""],
-//         ["", "", ""],
-//         ["", "", ""],
-//       ],
-//       currentPlayer: "",
-//       gameOverMessage: null,
-//       roomId: state.roomId,
-//       playerName: state.playerName,
-//       opponentName: state.opponentName,
-//       playerSymbol: state.playerSymbol,
-//       opponentSymbol: state.opponentSymbol,
-//     })),
-// }));

@@ -10,7 +10,7 @@ export const PlayerSetupModal = ({ onConfirm }: { onConfirm: () => void }) => {
     setGameState({
       playerName: name,
       playerSymbol: symbol,
-      opponentSymbol: symbol === "X" ? "O" : "X",
+      // opponentSymbol: symbol === "X" ? "O" : "X",
     });
     onConfirm();
   };
@@ -29,7 +29,9 @@ export const PlayerSetupModal = ({ onConfirm }: { onConfirm: () => void }) => {
           <span>Select your symbol:</span>
           <button
             className={`px-3 py-1 border rounded ${
-              symbol === "X" ? "bg-blue-500 text-white" : ""
+              symbol === "X"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-100 hover:bg-gray-200"
             }`}
             onClick={() => setSymbol("X")}
           >
@@ -45,7 +47,12 @@ export const PlayerSetupModal = ({ onConfirm }: { onConfirm: () => void }) => {
           </button>
         </div>
         <button
-          className="bg-green-500 text-white px-4 py-2 rounded w-full"
+          className={`px-4 py-2 rounded w-full ${
+            name.trim()
+              ? "bg-green-500 text-white hover:bg-green-600"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
+          // className="bg-green-500 text-white px-4 py-2 rounded w-full"
           onClick={handleSubmit}
           disabled={!name.trim()}
         >

@@ -9,7 +9,7 @@ const variantStyles = {
 
 type Variant = keyof typeof variantStyles;
 
-type ButtonProps = {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
