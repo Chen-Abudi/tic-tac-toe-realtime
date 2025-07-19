@@ -55,21 +55,6 @@ export function joinRoom(
   return room;
 }
 
-// export function joinRoom(
-//   roomId: string,
-//   socketId: string,
-//   playerName: string
-// ): GameState | null {
-//   const room = rooms.get(roomId);
-//   if (!room || room.players.length >= 2) return null;
-
-//   // assign symbol to the second player (if available)
-//   const symbol: Player = room.players.length === 1 ? "O" : "X";
-
-//   room.players.push({ id: socketId, name: playerName, symbol });
-//   return room;
-// }
-
 export function makePlayerMove(
   roomId: string,
   socketId: string,
