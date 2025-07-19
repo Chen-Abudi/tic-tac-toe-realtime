@@ -6,7 +6,9 @@ import { useGameStore } from "@client/store/game";
 import { Button } from "@tic-tac-toe/ui";
 
 type PlayersInfo = {
+  roomId: string;
   players: { id: string; name: string; symbol: "X" | "O" }[];
+  yourPlayerId: string;
   currentPlayerId: string;
 };
 
@@ -19,11 +21,77 @@ const RoomForm = () => {
   const setGameState = useGameStore((state) => state.setGameState);
 
   useEffect(() => {
-    if (!socket) return;
-
+    // TODO: Testing this solution
     const handlePlayersInfo = (data: PlayersInfo) => {
-      setGameState({ ...data, roomId });
+      if (!data.yourPlayerId) {
+        console.error("❌ Missing yourPlayerId in players_info payload:", data);
+        return;
+      }
+
+      const myPlayer = data.players.find((p) => p.id === data.yourPlayerId);
+      const opponentPlayer = data.players.find(
+        (p) => p.id !== data.yourPlayerId
+      );
+
+      if (!myPlayer || !opponentPlayer) {
+        console.warn("⚠️ Incomplete player info received:", {
+          players: data.players,
+          yourPlayerId: data.yourPlayerId,
+          myPlayer,
+          opponentPlayer,
+        });
+        return;
+      }
+
+      console.log("✅ Received full player info:", {
+        myPlayer,
+        opponentPlayer,
+        currentPlayerId: data.currentPlayerId,
+      });
+
+      setGameState({
+        roomId: data.roomId,
+        board: Array(3).fill(Array(3).fill(null)), // Reset board
+        currentPlayer:
+          data.currentPlayerId === myPlayer.id
+            ? myPlayer.symbol
+            : opponentPlayer.symbol,
+        playerName: myPlayer.name,
+        playerSymbol: myPlayer.symbol,
+        opponentName: opponentPlayer.name,
+        opponentSymbol: opponentPlayer.symbol,
+        gameFlow: "IN_GAME",
+      });
     };
+
+    // TODO: Might be removed or stay
+    // const handlePlayersInfo = (data: PlayersInfo) => {
+    //   const myPlayer = data.players.find(
+    //     (player) => player.id === data.yourPlayerId
+    //   );
+    //   const opponentPlayer = data.players.find(
+    //     (player) => player.id !== data.yourPlayerId
+    //   );
+
+    //   if (!myPlayer) {
+    //     console.error("⚠️ My player not found! Probably wrong socket.id");
+    //     return;
+    //   }
+
+    //   setGameState({
+    //     roomId: data.roomId,
+    //     board: Array(3).fill(Array(3).fill(null)), // reset board
+    //     currentPlayer:
+    //       data.currentPlayerId === myPlayer.id
+    //         ? myPlayer.symbol
+    //         : opponentPlayer?.symbol || "X",
+    //     playerName: myPlayer.name,
+    //     playerSymbol: myPlayer.symbol,
+    //     opponentName: opponentPlayer?.name || "",
+    //     opponentSymbol: opponentPlayer?.symbol || "O",
+    //     gameFlow: "IN_GAME",
+    //   });
+    // };
 
     const handleError = (err: string) => {
       alert(err);
@@ -32,12 +100,11 @@ const RoomForm = () => {
     socket.on("players_info", handlePlayersInfo);
     socket.on("error", handleError);
 
-    // Cleanup: remove listeners when unmounting
     return () => {
       socket.off("players_info", handlePlayersInfo);
       socket.off("error", handleError);
     };
-  }, [socket, setGameState, roomId]);
+  }, [socket, setGameState]);
 
   const handleCreateOrJoinRoom = (type: "create" | "join") => {
     if (!roomId.trim() || !playerName.trim()) return;
@@ -48,7 +115,6 @@ const RoomForm = () => {
       socket.emit("join_room", { roomId, playerName });
     }
 
-    // Immediately update game state to show the 'setting up' status
     setGameState({ gameFlow: "SETUP_ROOM" });
   };
 
@@ -101,70 +167,119 @@ const RoomForm = () => {
 
 export default RoomForm;
 
+// TODO: Might return or remove this
 // "use client";
 
-// import { useState } from "react";
+// import { useEffect, useState } from "react";
 // import { useSocket } from "@client/hooks/useSocket";
 // import { useGameStore } from "@client/store/game";
 // import { Button } from "@tic-tac-toe/ui";
+
+// type PlayersInfo = {
+//   roomId: string;
+//   players: { id: string; name: string; symbol: "X" | "O" }[];
+//   yourPlayerId: string;
+//   currentPlayerId: string;
+// };
 
 // const RoomForm = () => {
 //   const [roomId, setRoomId] = useState("");
 //   const [playerName, setPlayerName] = useState("");
 //   const [symbol, setSymbol] = useState<"X" | "O">("X");
+
 //   const socket = useSocket();
 //   const setGameState = useGameStore((state) => state.setGameState);
+
+//   useEffect(() => {
+//     if (!socket) return;
+
+//     // For debugging purposes - remove later
+//     const handlePlayersInfo = (data: PlayersInfo) => {
+//       // if (!socket) return;
+
+//       // console.log("[handlePlayersInfo] Socket ID:", socket.id);
+//       console.log("[handlePlayersInfo] Players received:", data.players);
+
+//       const myPlayer = data.players.find(
+//         (player) => player.id === data.yourPlayerId
+//       );
+//       const opponentPlayer = data.players.find(
+//         (player) => player.id !== data.yourPlayerId
+//       );
+
+//       console.log("My Player:", myPlayer);
+//       console.log("Opponent Player:", opponentPlayer);
+
+//       if (!myPlayer) {
+//         console.error("⚠️ My player not found! Probably wrong socket.id");
+//         return;
+//       }
+
+//       setGameState({
+//         roomId: data.roomId,
+//         board: [],
+//         currentPlayer:
+//           data.currentPlayerId === myPlayer.id
+//             ? myPlayer.symbol
+//             : opponentPlayer?.symbol || "X",
+//         playerName: myPlayer.name,
+//         playerSymbol: myPlayer.symbol,
+//         opponentName: opponentPlayer?.name || "",
+//         opponentSymbol: opponentPlayer?.symbol || "O",
+//         gameFlow: "IN_GAME",
+//       });
+//     };
+
+//     const handleError = (err: string) => {
+//       alert(err);
+//     };
+
+//     socket.on("players_info", handlePlayersInfo);
+//     socket.on("error", handleError);
+
+//     // Cleanup: remove listeners when unmounting
+//     return () => {
+//       socket.off("players_info", handlePlayersInfo);
+//       socket.off("error", handleError);
+//     };
+//   }, [socket, setGameState]);
 
 //   const handleCreateOrJoinRoom = (type: "create" | "join") => {
 //     if (!roomId.trim() || !playerName.trim()) return;
 
 //     if (type === "create") {
-//       socket.emit("create_room", {
-//         roomId,
-//         playerName,
-//         symbol,
-//       });
+//       socket.emit("create_room", { roomId, playerName, symbol });
 //     } else {
-//       socket.emit("join_room", {
-//         roomId,
-//         playerName,
-//       });
+//       socket.emit("join_room", { roomId, playerName });
 //     }
 
+//     // Immediately update game state to show the 'setting up' status
 //     setGameState({ gameFlow: "SETUP_ROOM" });
-
-//     socket.on("players_info", (data) => {
-//       setGameState({ ...data, roomId });
-//     });
-
-//     socket.on("error", (err) => {
-//       alert(err);
-//     });
 //   };
 
 //   return (
 //     <div className="flex flex-col items-center gap-4 mt-10">
 //       <input
+//         className="border px-4 py-2 rounded w-64"
 //         type="text"
 //         value={playerName}
-//         onChange={(e) => setPlayerName(e.target.value)}
-//         placeholder="Enter your name"
-//         className="border px-4 py-2 rounded w-64"
+//         onChange={(evt) => setPlayerName(evt.target.value)}
+//         placeholder="Please Enter Your Name"
 //       />
 //       <input
+//         className="border px-4 py-2 rounded w-64"
 //         type="text"
 //         value={roomId}
-//         onChange={(e) => setRoomId(e.target.value)}
+//         onChange={(evt) => setRoomId(evt.target.value)}
 //         placeholder="Enter room ID"
-//         className="border px-4 py-2 rounded w-64"
 //       />
 
 //       <div className="flex items-center gap-4">
 //         <label className="text-sm font-medium">Symbol:</label>
 //         <select
-//           value={symbol}
-//           onChange={(e) => setSymbol(e.target.value as "X" | "O")}
 //           className="px-4 py-2 rounded border"
+//           value={symbol}
+//           onChange={(evt) => setSymbol(evt.target.value as "X" | "O")}
 //         >
 //           <option value="X">X</option>
 //           <option value="O">O</option>
@@ -173,14 +288,14 @@ export default RoomForm;
 
 //       <div className="flex space-x-2 mt-4">
 //         <Button
-//           onClick={() => handleCreateOrJoinRoom("create")}
 //           className="bg-green-500 text-white px-4 py-2 rounded"
+//           onClick={() => handleCreateOrJoinRoom("create")}
 //         >
 //           Create Room
 //         </Button>
 //         <Button
-//           onClick={() => handleCreateOrJoinRoom("join")}
 //           className="bg-blue-500 text-white px-4 py-2 rounded"
+//           onClick={() => handleCreateOrJoinRoom("join")}
 //         >
 //           Join Room
 //         </Button>

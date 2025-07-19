@@ -41,12 +41,34 @@ export function joinRoom(
   const room = rooms.get(roomId);
   if (!room || room.players.length >= 2) return null;
 
-  // assign symbol to the second player (if available)
-  const symbol: Player = room.players.length === 1 ? "O" : "X";
+  const existingSymbol = room.players[0]?.symbol;
+  const symbol: Player = existingSymbol === "X" ? "O" : "X";
 
   room.players.push({ id: socketId, name: playerName, symbol });
+
+  // Testing - might change/remove later
+  // After both players join, set the correct current player
+  if (room.players.length === 2) {
+    room.currentPlayer = room.players[0].symbol;
+  }
+
   return room;
 }
+
+// export function joinRoom(
+//   roomId: string,
+//   socketId: string,
+//   playerName: string
+// ): GameState | null {
+//   const room = rooms.get(roomId);
+//   if (!room || room.players.length >= 2) return null;
+
+//   // assign symbol to the second player (if available)
+//   const symbol: Player = room.players.length === 1 ? "O" : "X";
+
+//   room.players.push({ id: socketId, name: playerName, symbol });
+//   return room;
+// }
 
 export function makePlayerMove(
   roomId: string,
