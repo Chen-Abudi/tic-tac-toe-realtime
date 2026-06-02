@@ -27,7 +27,7 @@
     "storybook": "^8.6.17",
     "tailwindcss": "^4.1.4",
     "typescript": "^5.8.3",
-    "vitest": "^3.1.1"
+    "vitest": "^4.1.0"
   },
   "scripts": {
     "storybook": "storybook dev -p 6006",
